@@ -1,0 +1,13 @@
+.inputField {
+    width: 20%;
+}
+
+.fancyButton{
+    padding: 5px;
+    width: 7%;
+}
+
+.success{
+    background-color: darkolivegreen;
+    color: white;
+}
