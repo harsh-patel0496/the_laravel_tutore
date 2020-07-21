@@ -26,7 +26,6 @@ Route::group([
     Route::post('/user/signup','UsersController@signup');
     Route::post('/user/save','USersController@save')->middleware('IpCheck');
     Route::post('/reactUser/login','ReactAppController@authenticate');
-    
     Route::get('/passport',function(){
         $state = Str::random(40);
         $query = http_build_query([
@@ -69,8 +68,11 @@ Route::group([
     });
 
     Route::group(['prefix' => 'message','middleware' => ['auth:react']],function(){
-        Route::get('/{user_id}','MessageController@index');
+
+        Route::get('/getMessages/{user_id}/{friend_id}','MessageController@index');
         Route::post('/store','MessageController@store');
+        Route::get('/getFriends/{user_id}','MessageController@getFriends');
+        Route::post('/markAsRead','MessageController@markAsRead');
     });
 
 });

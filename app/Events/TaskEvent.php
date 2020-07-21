@@ -16,16 +16,18 @@ class TaskEvent implements ShouldBroadcastNow
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
+    public $channel;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct($message,$channel)
     {
         //
 
         $this->message = $message;
+        $this->channel = $channel;
     }
 
 
@@ -37,7 +39,8 @@ class TaskEvent implements ShouldBroadcastNow
     public function broadcastOn()
     {
         //return ['hplink'];
-        return new PrivateChannel('hplink');
+        //echo"<pre>";print_r($this->channel);die;
+        return new PrivateChannel($this->channel);
     }
 
     public function broadcastAs()
