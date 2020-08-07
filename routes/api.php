@@ -73,7 +73,14 @@ Route::group([
         Route::post('/store','MessageController@store');
         Route::get('/getFriends/{user_id}','MessageController@getFriends');
         Route::post('/markAsRead','MessageController@markAsRead');
+        Route::post('/delete/{id}','MessageController@destroy');
     });
 
+    Route::group(['prefix' => 'tasks','middleware' => ['auth:react']], function () {
+        
+        Route::get('/','TaskController@index');
+        Route::post('/add','TaskController@store');
+        Route::post('/update/{id}','TaskController@update');
+    });
 });
 

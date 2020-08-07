@@ -27,6 +27,7 @@ class PaymentServiceProvider extends ServiceProvider implements DeferrableProvid
         //Register service container to our app
         $this->app->singleton('PaymentGatewayContract',function($app,$params){
             if(request()->has('credit')){
+                
                 return new CreditcardPaymentGateway($params);
             }
             return new BankPaymentGateway($params);

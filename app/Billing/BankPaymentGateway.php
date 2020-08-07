@@ -13,6 +13,7 @@ class BankPaymentGateway implements PaymentGatewayContract {
     }
 
     public function charge($amount){
+        
         return ['amount' => $amount - $this->discount,'confirmation_number' => Str::random(),'discount' => $this->discount];
     }
 

@@ -126,6 +126,7 @@ Route::get('event',function() {
 
 Route::get('/arrayEvent','ArrayController@index');
 
+Route::get('/sendNotification','NotificationController@sendNotification')->name('notify');
 
 // Route::get('pay','PayOrderController@store');
 // Route::get('/user/index','UsersController@index');

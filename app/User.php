@@ -57,4 +57,8 @@ class User extends Authenticatable implements JWTSubject
     public function friends(){
         return $this->belongsToMany('App\User','friends','user_id','friend_id');
     }
+
+    public function tasks(){
+        return $this->belongsToMany('App\Task','task_user','user_id','task_id');
+    }
 }

@@ -94,6 +94,7 @@
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                     <a href={{ route('passport',[6]) }} >Passport</a>
                     <a href={{ route('sendMail') }} >Send Mail</a>
+                    <a href={{ route('notify') }} >Send Notification</a>
                 </div>
             </div>
         </div>
