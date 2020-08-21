@@ -117,6 +117,10 @@ Route::get('/', function (Request $request) {
     return view('welcome');
 });
 
+// Route::get('/resetPassword', function (Request $request) {
+//     return view('mails.resetPassword');
+// });
+
 Route::get('/sendMail','SendMailController@sendMail')->name('sendMail');
 Route::get('event',function() {
     $message = 'Hey How Are You';

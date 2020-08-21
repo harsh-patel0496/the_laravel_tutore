@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\PaymentServiceProvider::class,
         App\Providers\MessageServiceProvider::class,
+        App\Providers\ResponseJsonServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
     ],

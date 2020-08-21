@@ -7,9 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     //
-    protected $guarded = [];
+    protected $guarded = ['project','description'];
 
     public function users(){
-        return $this->belongsToMany('App\User','task_user','task_id','user_id');
+        return $this->morphedByMany('App\User','assignable');
     }
+
+    public function projects(){
+        return $this->morphedByMany('App\Project','assignable');
+    }
+
+    
 }

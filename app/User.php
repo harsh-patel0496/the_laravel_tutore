@@ -59,6 +59,10 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function tasks(){
-        return $this->belongsToMany('App\Task','task_user','user_id','task_id');
+        return $this->morphToMany('App\Task','assignable');
+    }
+
+    public function projects(){
+        return $this->belongsToMany('App\Projects','project_user','user_id','project_id');
     }
 }

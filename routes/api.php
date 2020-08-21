@@ -64,7 +64,7 @@ Route::group([
 
     Route::group(['prefix' => 'role','middleware' => ['auth:react']], function () {
         Route::get('/','RoleController@index');
-        Route::post('/store','RoleController@store');
+        Route::post('/store','RoleController@show');
     });
 
     Route::group(['prefix' => 'message','middleware' => ['auth:react']],function(){
@@ -81,6 +81,13 @@ Route::group([
         Route::get('/','TaskController@index');
         Route::post('/add','TaskController@store');
         Route::post('/update/{id}','TaskController@update');
+    });
+
+    Route::group(['prefix' => 'projects','middleware' => ['auth:react']],function(){
+
+        Route::get('/','ProjectController@index');
+        Route::post('/add','ProjectController@store');
+        Route::get('/show/{id}/{pivot}','ProjectController@show');
     });
 });
 

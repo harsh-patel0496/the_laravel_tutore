@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
-
+use App\Facades\ResponseJsonFacade;
 class TaskController extends Controller
 {
 
@@ -42,15 +42,12 @@ class TaskController extends Controller
         //
         $task = $request->all();
         $createdTask = $this->task->create($task);
+        $createdTask->projects()->attach([$task['project']]);
         $createdTask->users()->attach($this->user);
-        $taskWithUser = $this->taskWithUsers();
-        $result = array(
-            'status' => true,
-            'tasks' => $taskWithUser,
-            'message' => 'Task Created Successfully!'
-        );
-
-        return response()->json($taskWithUser);
+        $taskWithProjects = $this->taskWithProjects($task['project']);
+        $result = ResponseJsonFacade::result(true,'Task Created Successfully!','tasks',$taskWithProjects);
+        
+        return response()->json($result);
 
     }
 
@@ -78,6 +75,10 @@ class TaskController extends Controller
         $data = $request->all();
         $task = $this->task->where('id',$id)->update(['type' => $data['destinationType']]);
         if($task == 1){
+            
+            foreach($data['newPriority'] as $key => $val){
+                $this->task->where('id',$key)->update(['priority' => $val]);
+            }
             $result = array(
                 'status' => true,
                 'message' => 'Type Updated Successfuly!'
@@ -106,6 +107,18 @@ class TaskController extends Controller
         $taskWithUser = $this->task->select('tasks.id','tasks.name','tasks.type')->with('users')->whereHas('users' , function($query){
             $query->where('users.id',$this->user->id);
         })->get();
+
+        $finalArray = [];
+        foreach($taskWithUser as $task){
+            $finalArray[$task->type][] = $task;
+        }
+        return $finalArray;
+    }
+
+    protected function taskWithProjects($project_id){
+        $taskWithUser = $this->task->select('tasks.id','tasks.name','tasks.type')->with('projects')->whereHas('projects' , function($query) use ($project_id){
+            $query->where('projects.id',$project_id);
+        })->orderBy('tasks.priority', 'desc')->get();
 
         $finalArray = [];
         foreach($taskWithUser as $task){
